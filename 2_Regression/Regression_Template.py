@@ -16,7 +16,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 1/3, rando
 #Fitting the Regression to the dataset
 #Create your regressor here
 
-#Predicting the new result with Polynomial Regression
+#Predicting the new result with Regression
 y_pred = regressor.predict(6.5)
 
 #Visualising the Regression results
