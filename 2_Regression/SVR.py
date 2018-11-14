@@ -20,10 +20,10 @@ from sklearn.svm import SVR
 regressor = SVR(kernel = 'rbf')
 regressor.fit(X, y)
 
-#Predicting the new result with Polynomial Regression
+#Predicting the new result with SVR
 y_pred = sc_y.inverse_transform(regressor.predict(sc_X.transform(np.array([[6.5]]))))
 
-#Visualising the Regression results
+#Visualising the SVR results
 plt.scatter(X, y, color = 'red')
 plt.plot(X, regressor.predict(X), color = 'blue')
 plt.title('Truth or Bluff (Regression Model)')
@@ -31,11 +31,11 @@ plt.xlabel('Position Level')
 plt.ylabel('Salary')
 plt.show()
 
-#Visualising the Regression results (for higher resolution and smoother curve)
+#Visualising the SVR results (for higher resolution and smoother curve)
 X_grid = np.arange(min(X), max(X), 0.1)
 X_grid = X_grid.reshape((len(X_grid), 1))
 plt.scatter(X, y, color = 'red')
-plt.plot(X, regressor.predict(X), color = 'blue')
+plt.plot(X_grid, regressor.predict(X_grid), color = 'blue')
 plt.title('Truth or Bluff (Regression Model)')
 plt.xlabel('Position Level')
 plt.ylabel('Salary')
