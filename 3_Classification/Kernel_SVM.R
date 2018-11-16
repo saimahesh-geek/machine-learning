@@ -1,5 +1,5 @@
 #Importing datasets
-dataset = read.csv('Social_Network_Ads.csv')
+dataset = read.csv('Social_Network_Ads_Non_Linear_DS.csv')
 dataset = dataset[,3:5]
 
 #Splitting the dataset into training and test sets
@@ -15,12 +15,13 @@ test_set = subset(dataset, split == FALSE)
 training_set[, 1:2] = scale(training_set[, 1:2]) 
 test_set[, 1:2] = scale(test_set[, 1:2])
 
-#Fitting the SVM classifier to dataset
+#Fitting the Kernel SVM classifier to dataset #library('kernlab')
 library(e1071)
+#Gaussian kernal - radial
 classifier = svm(formula = Purchased ~ .,
                  data = training_set,
                  type = 'C-classification',
-                 kernel = 'linear')
+                 kernel = 'radial')
 
 
 #Predicting the test set results
@@ -30,11 +31,11 @@ y_pred = predict(classifier, newdata = test_set[-3])
 cm = table(test_set[, 3], y_pred)
 
 # y_pred
-#    0  1
-# 0 57  7
-# 1 13 23
+# 0  1
+# 0 58  6
+# 1  4 32
 
-#Visualising the training set
+#Visualising Kernel the training set
 #install.packages("ElemStatLearn")
 library(ElemStatLearn)
 set = training_set
@@ -44,7 +45,7 @@ grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
 y_grid = predict(classifier, newdata = grid_set)
 plot(set[, -3],
-     main = 'SVM Classifier (Training set)',
+     main = 'Kernel SVM Classifier (Training set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), add = TRUE)
@@ -52,7 +53,7 @@ points(grid_set, pch = '.', col = ifelse(y_grid == 1, 'springgreen3', 'tomato'))
 points(set, pch = 21, bg = ifelse(set[, 3] == 1, 'green4', 'red3'))
 
 
-#Visualising Test set
+#Visualising Kernel Test set
 set = test_set
 X1 = seq(min(set[, 1]) - 1, max(set[, 1]) + 1, by = 0.01)
 X2 = seq(min(set[, 2]) - 1, max(set[, 2]) + 1, by = 0.01)
@@ -60,7 +61,7 @@ grid_set = expand.grid(X1, X2)
 colnames(grid_set) = c('Age', 'EstimatedSalary')
 y_grid = predict(classifier, newdata = grid_set)
 plot(set[, -3],
-     main = 'SVM Classifier (Test set)',
+     main = 'Kernel SVM Classifier (Test set)',
      xlab = 'Age', ylab = 'Estimated Salary',
      xlim = range(X1), ylim = range(X2))
 contour(X1, X2, matrix(as.numeric(y_grid), length(X1), length(X2)), add = TRUE)
