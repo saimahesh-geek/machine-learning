@@ -6,7 +6,7 @@ library(arules)
 dataset = read.transactions('Market_Basket_Optimisation.csv', sep = ',', rm.duplicates = TRUE)
 summary(dataset)
 
-itemFrequencyPlot(dataset, topenv = 100)
+itemFrequencyPlot(dataset, topN = 100)
 
 # Training apriori on the dataset
 total_rows = nrow(dataset)
